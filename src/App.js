@@ -28,9 +28,7 @@ function App() {
       theme={{
         token: {
           // Seed Token
-          colorPrimary: "white",
           borderRadius: 2,
-          colorBgContainer: "#00264d",
           fontFamily: "Poppins",
         },
         components: {
@@ -40,6 +38,7 @@ function App() {
             colorText: "white",
             groupTitleColor: "green",
             horizontalItemSelectedColor: "yellow",
+            colorBgContainer: "#00264d",
             fontFamily: "Poppins",
             fontSize: 16,
           },

@@ -1,14 +1,5 @@
-import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import {
-  Flex,
-  Typography,
-  Layout,
-  Space,
-  Menu,
-  Row,
-  Avatar,
-  Divider,
-} from "antd";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Typography, Layout, Space, Menu, Row, Avatar, Divider } from "antd";
 
 const { Header, Content } = Layout;
 
@@ -32,13 +23,13 @@ export default function RootLayout() {
       <Header
         style={{
           display: "flex",
-          height: 85,
+          height: 90,
           alignItems: "center",
           backgroundColor: "#00264d",
           padding: "0 0",
         }}
       >
-        <Row style={{ alignItems: "center", padding: "0 20px" }}>
+        <Row style={{ alignItems: "center", padding: "0 25px" }}>
           <Space size={10}>
             <Avatar alt="none" size={65} src={require("../assets/logo.png")} />
             <Typography.Text style={{ fontSize: 20, color: "white" }}>
@@ -58,7 +49,7 @@ export default function RootLayout() {
           onClick={handleMenuClick}
         />
       </Header>
-      <Content>
+      <Content style={{ backgroundColor: "#f5f5f5" }}>
         <Outlet />
       </Content>
     </Layout>
