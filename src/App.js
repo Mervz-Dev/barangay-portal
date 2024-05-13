@@ -4,11 +4,12 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
-import { Button, ConfigProvider, Space } from "antd";
+import { ConfigProvider } from "antd";
 
 // pages
 import Home from "./pages/Home";
 import About from "./pages/About";
+import CreateAccount from "./pages/CreateAccount";
 
 // layouts
 import RootLayout from "./layouts/RootLayout";
@@ -18,6 +19,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       <Route index element={<Home />} />
       <Route path="/about" element={<About />} />
+      <Route path="/create-account" element={<CreateAccount />} />
     </Route>
   )
 );

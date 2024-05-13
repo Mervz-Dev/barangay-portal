@@ -9,9 +9,11 @@ import {
   Row,
   Divider,
 } from "antd";
+import { useNavigate } from "react-router-dom";
 const { Title, Text, Paragraph } = Typography;
 
 function Home() {
+  const navigate = useNavigate();
   return (
     <Flex style={{ padding: 20, justifyContent: "space-around" }}>
       <Flex style={{ flex: 1.5, paddingLeft: 20, paddingRight: 20 }}>
@@ -101,8 +103,8 @@ function Home() {
 
             <Row>
               <Text>
-                Are you an Amoingon's resident? Join our hub today and discover
-                the convenience of online barangay services!
+                Are you an Amoingon resident? Join our hub now for convenient
+                online barangay services!
               </Text>
             </Row>
             <Flex
@@ -113,8 +115,9 @@ function Home() {
             >
               <Button
                 type="primary"
+                onClick={() => navigate("create-account")}
                 style={{
-                  backgroundColor: "#4CAF50",
+                  backgroundColor: "orange",
                   marginTop: 10,
                 }}
               >

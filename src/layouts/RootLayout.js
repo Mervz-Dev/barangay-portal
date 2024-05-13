@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Typography, Layout, Space, Menu, Row, Avatar, Divider } from "antd";
 
 const { Header, Content } = Layout;
@@ -12,6 +12,7 @@ const navigation = [
 
 export default function RootLayout() {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleMenuClick = ({ key }) => {
     if (key) {
@@ -44,7 +45,8 @@ export default function RootLayout() {
           className="menu"
           style={{ flex: 1, minWidth: 0, borderBottom: "none" }}
           mode="horizontal"
-          defaultSelectedKeys={["/"]}
+          selectedKeys={[location.pathname]}
+          defaultSelectedKeys={[location.pathname]}
           items={navigation}
           onClick={handleMenuClick}
         />
