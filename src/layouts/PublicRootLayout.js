@@ -1,7 +1,17 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import { Typography, Layout, Space, Menu, Row, Avatar, Divider } from "antd";
+import {
+  Typography,
+  Layout,
+  Space,
+  Menu,
+  Row,
+  Avatar,
+  Divider,
+  Col,
+} from "antd";
 
-const { Header, Content } = Layout;
+const { Header, Content, Footer } = Layout;
+const { Title, Paragraph } = Typography;
 
 const navigation = [
   { label: "Home", key: "/" },
@@ -54,6 +64,13 @@ export default function RootLayout() {
       <Content style={{ backgroundColor: "#f5f5f5" }}>
         <Outlet />
       </Content>
+
+      <Footer style={{ backgroundColor: "white" }}>
+        <Paragraph style={{ textAlign: "center" }}>
+          © 2024 BOAC LGU’S LOCAL PORTAL | Barangay Amoingon hub | St. Brgy.
+          Amoingon, Boac, Marinduque
+        </Paragraph>
+      </Footer>
     </Layout>
   );
 }
