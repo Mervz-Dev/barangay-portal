@@ -11,20 +11,22 @@ import {
   Button,
 } from "antd";
 import { logOut } from ".././services/auth";
+import { useUserStore } from "../stores/userStore";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph } = Typography;
 
-const navigation = [
-  { label: "Home", key: "/" },
-  { label: "Requests", key: "/requests" },
-  { label: "Businesses", key: "/businesses" },
-  { label: "FAQ", key: "/faq" },
-];
-
 export default function PrivateRootLayout() {
+  const { fullname, isValidResident } = useUserStore();
   const navigate = useNavigate();
   const location = useLocation();
+
+  const navigation = [
+    { label: "Home", key: "/" },
+    { label: "Requests", key: "/requests", hidden: !isValidResident },
+    { label: "Businesses", key: "/businesses" },
+    { label: "FAQ", key: "/faq" },
+  ];
 
   const handleMenuClick = ({ key }) => {
     if (key) {
@@ -63,7 +65,7 @@ export default function PrivateRootLayout() {
             </Space>
           </Row>
           <Title style={{ color: "white" }} level={5}>
-            Full Name
+            {fullname}
           </Title>
         </Row>
       </Header>
@@ -77,14 +79,25 @@ export default function PrivateRootLayout() {
               justifyContent: "space-between",
             }}
           >
-            <Menu
+            <Menu onClick={handleMenuClick}>
+              {navigation.map((item) =>
+                item.hidden ? (
+                  <></>
+                ) : (
+                  <Menu.Item key={item.key} disabled={item.disabled}>
+                    {item.label}
+                  </Menu.Item>
+                )
+              )}
+            </Menu>
+            {/* <Menu
               mode="inline"
               style={{ borderRight: 0 }}
               selectedKeys={[location.pathname]}
               defaultSelectedKeys={[location.pathname]}
               items={navigation}
               onClick={handleMenuClick}
-            />
+            /> */}
 
             <Col
               style={{
@@ -98,7 +111,7 @@ export default function PrivateRootLayout() {
                 onClick={logOut}
                 style={{
                   color: "white",
-                  backgroundColor: "	#b23b3b",
+                  backgroundColor: "#b23b3b",
                   width: "70%",
                   height: "40px",
                   borderColor: "white",

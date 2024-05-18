@@ -12,20 +12,26 @@ import { auth } from "./firebase";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import CreateAccount from "./pages/CreateAccount";
+
 import Dashboard from "./pages/private/Dashboard";
 import Requests from "./pages/private/Requests";
 import Faq from "./pages/private/Faq";
 import Businesses from "./pages/Businesses";
+
+// admin
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 // layouts
 import PublicRootLayout from "./layouts/PublicRootLayout";
 import PrivateRootLayout from "./layouts/PrivateRootLayout";
 import { useUserStore } from "./stores/userStore";
 import { getUserData } from "./services/user";
+import { usePageLoaderStore } from "./stores/pageLoaderStore";
 
 function App() {
-  const { isLoading, isAuthenticated, setLoading, onLogin, onLogout } =
+  const { isLoading, isAuthenticated, setLoading, onLogin, onLogout, role } =
     useUserStore();
+  const { isPageLoading } = usePageLoaderStore();
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
@@ -59,9 +65,15 @@ function App() {
       >
         {isAuthenticated ? (
           <>
-            <Route index element={<Dashboard />} />
-            <Route path="requests" element={<Requests />} />
-            <Route path="faq" element={<Faq />} />
+            {role === "admin" ? (
+              <Route index element={<AdminDashboard />} />
+            ) : (
+              <>
+                <Route index element={<Dashboard />} />
+                <Route path="requests" element={<Requests />} />
+                <Route path="faq" element={<Faq />} />
+              </>
+            )}
           </>
         ) : (
           <>
@@ -83,6 +95,7 @@ function App() {
           // Seed Token
           borderRadius: 2,
           fontFamily: "Poppins",
+          colorPrimary: "#003b7f",
         },
         components: {
           Menu: {
@@ -98,7 +111,9 @@ function App() {
         },
       }}
     >
-      <RouterProvider router={router} />
+      <Spin spinning={isPageLoading} size="large" tip="Loading...">
+        <RouterProvider router={router} />
+      </Spin>
     </ConfigProvider>
   );
 }

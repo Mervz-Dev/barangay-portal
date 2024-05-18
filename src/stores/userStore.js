@@ -1,5 +1,15 @@
 import { create } from "zustand";
 
+const checkSixMonthsResidency = (startDateOfResidency) => {
+  const startDate = new Date(startDateOfResidency);
+  const currentDate = new Date();
+
+  const sixMonthsAgo = new Date();
+  sixMonthsAgo.setMonth(currentDate.getMonth() - 6);
+
+  return startDate <= sixMonthsAgo;
+};
+
 const defaultUser = {
   id: "",
   fullname: "",
@@ -7,6 +17,8 @@ const defaultUser = {
   birthplace: "",
   startDateOfResidency: null,
   email: "",
+  role: null,
+  isValidResident: false,
 };
 
 const useUserStore = create((set) => ({
@@ -14,11 +26,14 @@ const useUserStore = create((set) => ({
   isAuthenticated: false,
   ...defaultUser,
   onLogin: (user) => {
+    const isValidResident = checkSixMonthsResidency(user.startDateOfResidency);
+    console.log("isValidResident", isValidResident, user.startDateOfResidency);
     set((state) => ({
       ...state,
       ...user,
       isLoading: false,
       isAuthenticated: true,
+      isValidResident,
     }));
   },
   onLogout: () => {
