@@ -199,7 +199,7 @@ export default function Businesses() {
           )}
         </Col>
         <Col span={10}>
-          <div style={{ overflow: "auto", maxHeight: "400px" }}>
+          <div style={{ overflow: "auto", height: "86vh" }}>
             <List
               itemLayout="horizontal"
               dataSource={businesses}

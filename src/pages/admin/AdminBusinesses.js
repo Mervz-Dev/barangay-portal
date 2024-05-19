@@ -145,7 +145,6 @@ const Businesses = () => {
   }, []);
 
   const handleClick = (event) => {
-    console.log("this again?");
     const lat = event.latLng.lat();
     const lng = event.latLng.lng();
     setMarkerPosition({ lat, lng });
@@ -403,19 +402,24 @@ const Businesses = () => {
         </>
       </Modal>
 
-      <Table columns={columns} dataSource={businesses} rowKey="id" />
+      <Table
+        columns={columns}
+        pagination={{ pageSize: 6 }}
+        dataSource={businesses}
+        rowKey="businessName"
+      />
 
       <Modal
         title="Business Details"
         open={isBusinessDetailsModalVisible}
         onCancel={() => setIsBusinessDetailsModalVisible(false)}
-        footer={null} // Removes the default footer
+        footer={null}
       >
         {selectedBusiness && (
           <div>
             <Descriptions
               title={selectedBusiness.businessName}
-              layout="horizontal" // Change this prop
+              layout="horizontal"
               column={2}
             >
               <Descriptions.Item label="Owner">
