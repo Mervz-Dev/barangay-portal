@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import { getAllRequests } from "../services/form-request";
 import { getAllUsers } from "../services/user";
+import { clear } from "@testing-library/user-event/dist/clear";
 
 const checkSixMonthsResidency = (startDateOfResidency) => {
   const startDate = new Date(startDateOfResidency);
@@ -44,6 +45,15 @@ const adminStore = create((set) => ({
       rejectedRequestsCount: rejectedRequests.length,
       residentsCount: residents.length,
       nonResidentsCount: nonResidents.length,
+    });
+  },
+  clear: () => {
+    set({
+      pendingRequestsCount: 0,
+      approvedRequestsCount: 0,
+      rejectedRequestsCount: 0,
+      residentsCount: 0,
+      nonResidentsCount: 0,
     });
   },
 }));

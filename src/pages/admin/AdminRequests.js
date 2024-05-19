@@ -1,30 +1,12 @@
 import React, { useState, useEffect } from "react";
-import {
-  Col,
-  Row,
-  Table,
-  Typography,
-  Button,
-  Modal,
-  Card,
-  message,
-  Tag,
-  Form,
-  Input,
-} from "antd";
-import {
-  CheckCircleTwoTone,
-  EnvironmentTwoTone,
-  ShopTwoTone,
-  CheckCircleOutlined,
-} from "@ant-design/icons";
-import { createRequest } from "../../services/form-request";
+import { Col, Row, Table, Typography, Tag, Tabs } from "antd";
+
 import { useUserStore } from "../../stores/userStore";
-import { usePageLoaderStore } from "../../stores/pageLoaderStore";
 import { useRequestsStore } from "../../stores/requestsStore";
 import { useNavigate, Link } from "react-router-dom";
 
-const { Title, Paragraph, Text } = Typography;
+const { Title } = Typography;
+const { TabPane } = Tabs;
 
 const columns = [
   {
@@ -32,7 +14,7 @@ const columns = [
     dataIndex: "id",
     key: "id",
     sorter: (a, b) => a.id - b.id,
-    render: (id) => <Link to={`/request/${id}`}>{id}</Link>,
+    render: (id) => <Link>{id}</Link>,
   },
   {
     title: "Form Type",
@@ -79,25 +61,27 @@ const columns = [
 ];
 
 export default function Requests() {
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const { id, isValidResident } = useUserStore();
-  const { setPageLoading } = usePageLoaderStore();
-  const { requests, fetchAllRequests, addNewRequest } = useRequestsStore();
-  const [messageApi, contextHolder] = message.useMessage();
+  const { isValidResident } = useUserStore();
+  const { requests, fetchAllRequests } = useRequestsStore();
+  const [tabKey, setTabKey] = useState("all");
+
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchAllRequests(id);
+    fetchAllRequests(tabKey === "pending" ? "pending" : null);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [tabKey]);
 
   if (!isValidResident) {
     return;
   }
 
+  const handleTabChange = (key) => {
+    setTabKey(key);
+  };
+
   return (
     <Col style={{ padding: 20 }}>
-      {contextHolder}
       <Row
         style={{
           display: "flex",
@@ -107,12 +91,20 @@ export default function Requests() {
         }}
       >
         <Title level={2}>Requests</Title>
+        <Tabs
+          onChange={handleTabChange}
+          defaultActiveKey="1"
+          style={{ marginTop: 10 }}
+        >
+          <TabPane tab="All" key="all"></TabPane>
+          <TabPane tab="Pending" key="pending"></TabPane>
+        </Tabs>
       </Row>
 
       <Table
         columns={columns}
         dataSource={requests}
-        pagination={{ pageSize: 10 }}
+        pagination={{ pageSize: 8 }}
         onRow={(record) => {
           return {
             onClick: () => {

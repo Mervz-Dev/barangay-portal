@@ -49,7 +49,7 @@ function AdminRequestDetails() {
   }, [request.userId]);
 
   const handleBreadcrumbClick = () => {
-    navigate("/requests");
+    navigate(-1);
   };
 
   const openSuccessModal = () => {
@@ -58,7 +58,7 @@ function AdminRequestDetails() {
 
   const closeSuccessModal = () => {
     setIsSuccessModalVisible(false);
-    navigate("/requests");
+    navigate(-1);
   };
 
   function getFormName(type) {

@@ -22,6 +22,7 @@ import Businesses from "./pages/Businesses";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminRequests from "./pages/admin/AdminRequests";
 import AdminRequestDetails from "./pages/admin/AdminRequestDetails";
+import AdminBusinesses from "./pages/admin/AdminBusinesses";
 
 // layouts
 import PublicRootLayout from "./layouts/PublicRootLayout";
@@ -34,6 +35,7 @@ function App() {
   const { isLoading, isAuthenticated, setLoading, onLogin, onLogout, role } =
     useUserStore();
   const { isPageLoading } = usePageLoaderStore();
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
@@ -74,6 +76,7 @@ function App() {
                   <Route index element={<AdminRequests />} />
                   <Route path=":id" element={<AdminRequestDetails />} />
                 </Route>
+                <Route path="businesses" element={<AdminBusinesses />} />
               </>
             ) : (
               <>

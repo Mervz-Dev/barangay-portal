@@ -12,12 +12,14 @@ import {
 } from "antd";
 import { logOut } from ".././services/auth";
 import { useUserStore } from "../stores/userStore";
+import { useRequestsStore } from "../stores/requestsStore";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph } = Typography;
 
 export default function PrivateRootLayout() {
   const { fullname, isValidResident } = useUserStore();
+  const requestsStore = useRequestsStore();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,7 +27,6 @@ export default function PrivateRootLayout() {
     { label: "Home", key: "/" },
     { label: "Requests", key: "/requests", hidden: !isValidResident },
     { label: "Businesses", key: "/businesses" },
-    { label: "FAQ", key: "/faq" },
   ];
 
   const handleMenuClick = ({ key }) => {
@@ -110,6 +111,7 @@ export default function PrivateRootLayout() {
                 type="default"
                 onClick={async () => {
                   await logOut();
+                  requestsStore.clear();
                   navigate("/");
                   window.location.reload();
                 }}

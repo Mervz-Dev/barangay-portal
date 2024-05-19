@@ -70,10 +70,18 @@ const getRequestsByUserId = async (userId) => {
   }
 };
 
-const getAllRequests = async () => {
+const getAllRequests = async (status) => {
   try {
     const requestsRef = collection(db, COLLECTION_NAMES.FORM_REQUESTS);
-    const querySnapshot = await getDocs(requestsRef);
+    let q;
+
+    if (status) {
+      q = query(requestsRef, where("status", "==", status));
+    } else {
+      q = requestsRef;
+    }
+
+    const querySnapshot = await getDocs(q);
 
     if (!querySnapshot.empty) {
       return querySnapshot.docs.map((doc) => doc.data());
