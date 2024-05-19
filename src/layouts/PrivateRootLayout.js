@@ -13,6 +13,7 @@ import {
 import { logOut } from ".././services/auth";
 import { useUserStore } from "../stores/userStore";
 import { useRequestsStore } from "../stores/requestsStore";
+import { useBusinessesStore } from "../stores/businessesStore";
 
 const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph } = Typography;
@@ -20,6 +21,7 @@ const { Title, Paragraph } = Typography;
 export default function PrivateRootLayout() {
   const { fullname, isValidResident } = useUserStore();
   const requestsStore = useRequestsStore();
+  const businessStore = useBusinessesStore();
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -112,6 +114,7 @@ export default function PrivateRootLayout() {
                 onClick={async () => {
                   await logOut();
                   requestsStore.clear();
+                  businessStore.clear();
                   navigate("/");
                   window.location.reload();
                 }}
