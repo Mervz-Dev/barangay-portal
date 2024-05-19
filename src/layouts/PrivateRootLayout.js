@@ -19,7 +19,7 @@ const { Header, Content, Footer, Sider } = Layout;
 const { Title, Paragraph } = Typography;
 
 export default function PrivateRootLayout() {
-  const { fullname, isValidResident } = useUserStore();
+  const { fullname, isValidResident, role } = useUserStore();
   const requestsStore = useRequestsStore();
   const businessStore = useBusinessesStore();
   const navigate = useNavigate();
@@ -28,7 +28,10 @@ export default function PrivateRootLayout() {
   const navigation = [
     { label: "Home", key: "/" },
     { label: "Requests", key: "/requests", hidden: !isValidResident },
-    { label: "Businesses", key: "/businesses" },
+    {
+      label: role === "admin" ? "Businesses" : "Find Businesses",
+      key: "/businesses",
+    },
   ];
 
   const handleMenuClick = ({ key }) => {
