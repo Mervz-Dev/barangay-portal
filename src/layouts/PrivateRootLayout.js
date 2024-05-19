@@ -108,7 +108,11 @@ export default function PrivateRootLayout() {
             >
               <Button
                 type="default"
-                onClick={logOut}
+                onClick={async () => {
+                  await logOut();
+                  navigate("/");
+                  window.location.reload();
+                }}
                 style={{
                   color: "white",
                   backgroundColor: "#b23b3b",

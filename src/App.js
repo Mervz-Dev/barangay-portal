@@ -20,6 +20,8 @@ import Businesses from "./pages/Businesses";
 
 // admin
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import AdminRequests from "./pages/admin/AdminRequests";
+import AdminRequestDetails from "./pages/admin/AdminRequestDetails";
 
 // layouts
 import PublicRootLayout from "./layouts/PublicRootLayout";
@@ -66,11 +68,18 @@ function App() {
         {isAuthenticated ? (
           <>
             {role === "admin" ? (
-              <Route index element={<AdminDashboard />} />
+              <>
+                <Route index element={<AdminDashboard />} />
+                <Route path="requests">
+                  <Route index element={<AdminRequests />} />
+                  <Route path=":id" element={<AdminRequestDetails />} />
+                </Route>
+              </>
             ) : (
               <>
                 <Route index element={<Dashboard />} />
                 <Route path="requests" element={<Requests />} />
+
                 <Route path="faq" element={<Faq />} />
               </>
             )}

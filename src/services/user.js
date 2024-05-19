@@ -3,7 +3,7 @@ import {
   doc,
   getDoc,
   setDoc,
-  //   getDocs,
+  getDocs,
   //   limit,
   //   onSnapshot,
   //   query,
@@ -48,4 +48,15 @@ const getUserData = async (userId) => {
   }
 };
 
-export { signUpForm, getUserData };
+const getAllUsers = async () => {
+  try {
+    const usersRef = collection(db, COLLECTION_NAMES.USERS);
+    const usersSnapshot = await getDocs(usersRef);
+    const users = usersSnapshot.docs.map((doc) => doc.data());
+    return users;
+  } catch (error) {
+    console.log("getAllUsers error: ", error);
+  }
+};
+
+export { signUpForm, getUserData, getAllUsers };

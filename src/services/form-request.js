@@ -14,6 +14,7 @@ import {
 
 import { COLLECTION_NAMES } from "../firebase/collection";
 import { db } from "../firebase";
+import { update } from "firebase/database";
 
 const generateRefId = () => {
   var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
@@ -69,4 +70,29 @@ const getRequestsByUserId = async (userId) => {
   }
 };
 
-export { createRequest, getRequestsByUserId };
+const getAllRequests = async () => {
+  try {
+    const requestsRef = collection(db, COLLECTION_NAMES.FORM_REQUESTS);
+    const querySnapshot = await getDocs(requestsRef);
+
+    if (!querySnapshot.empty) {
+      return querySnapshot.docs.map((doc) => doc.data());
+    } else {
+      console.log("No requests found!");
+      return [];
+    }
+  } catch (error) {
+    console.log("getAllRequests error: ", error);
+  }
+};
+
+const updateRequest = async (request) => {
+  try {
+    const requestRef = doc(db, COLLECTION_NAMES.FORM_REQUESTS, request.id);
+    await setDoc(requestRef, request, { merge: true });
+  } catch (error) {
+    console.log("updateRequest error: ", error);
+  }
+};
+
+export { createRequest, getRequestsByUserId, getAllRequests, updateRequest };
