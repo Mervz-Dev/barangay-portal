@@ -108,10 +108,10 @@ export default function Businesses() {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           // console.log(position);
-          // setCurrenLocation({
-          //   lat: position.coords.latitude,
-          //   lng: position.coords.longitude,
-          // });
+          setCurrenLocation({
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          });
         },
         (error) => {
           console.error(`Error getting location ${error}`);
