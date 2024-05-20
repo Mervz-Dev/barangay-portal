@@ -1,10 +1,12 @@
 import React from "react";
 import { Typography, Button, Space, Col, Row, Card } from "antd";
 import { Link } from "react-router-dom";
+import { useUserStore } from "../../stores/userStore";
 
 const { Title, Paragraph } = Typography;
 
 export default function Dashboard() {
+  const { isValidResident } = useUserStore();
   return (
     <div style={{ height: "88vh", overflow: "auto" }}>
       <Space
@@ -28,28 +30,30 @@ export default function Dashboard() {
         </Paragraph>
 
         <Row gutter={[16, 16]} justify="center">
-          <Col xs={24} sm={12} md={8}>
-            <Card
-              hoverable
-              cover={
-                <img
-                  alt="Barangay Clearance"
-                  src={require("../../assets/request-form.jpg")}
-                />
-              }
-            >
-              <Title level={3}>Request Forms</Title>
-              <Paragraph>
-                Easily request your forms on our barangay online. Save time and
-                avoid the hassle of paperwork.
-              </Paragraph>
-              <Link to="/requests">
-                <Button style={{ backgroundColor: "#003b7f" }} type="primary">
-                  Request Forms
-                </Button>
-              </Link>
-            </Card>
-          </Col>
+          {isValidResident && (
+            <Col xs={24} sm={12} md={8}>
+              <Card
+                hoverable
+                cover={
+                  <img
+                    alt="Barangay Clearance"
+                    src={require("../../assets/request-form.jpg")}
+                  />
+                }
+              >
+                <Title level={3}>Request Forms</Title>
+                <Paragraph>
+                  Easily request your forms on our barangay online. Save time
+                  and avoid the hassle of paperwork.
+                </Paragraph>
+                <Link to="/requests">
+                  <Button style={{ backgroundColor: "#003b7f" }} type="primary">
+                    Request Forms
+                  </Button>
+                </Link>
+              </Card>
+            </Col>
+          )}
           <Col xs={24} sm={12} md={8}>
             <Card
               hoverable

@@ -6,24 +6,20 @@ import {
   Menu,
   Row,
   Avatar,
-  Divider,
   Col,
   Button,
 } from "antd";
 import { logOut } from ".././services/auth";
 import { useUserStore } from "../stores/userStore";
 import { useRequestsStore } from "../stores/requestsStore";
-import { useBusinessesStore } from "../stores/businessesStore";
 
-const { Header, Content, Footer, Sider } = Layout;
-const { Title, Paragraph } = Typography;
+const { Header, Content, Sider } = Layout;
+const { Title } = Typography;
 
 export default function PrivateRootLayout() {
   const { fullname, isValidResident, role } = useUserStore();
   const requestsStore = useRequestsStore();
-  const businessStore = useBusinessesStore();
   const navigate = useNavigate();
-  const location = useLocation();
 
   const navigation = [
     { label: "Home", key: "/" },
@@ -96,14 +92,6 @@ export default function PrivateRootLayout() {
                 )
               )}
             </Menu>
-            {/* <Menu
-              mode="inline"
-              style={{ borderRight: 0 }}
-              selectedKeys={[location.pathname]}
-              defaultSelectedKeys={[location.pathname]}
-              items={navigation}
-              onClick={handleMenuClick}
-            /> */}
 
             <Col
               style={{
@@ -116,9 +104,8 @@ export default function PrivateRootLayout() {
                 type="default"
                 onClick={async () => {
                   await logOut();
-                  requestsStore.clear();
-                  businessStore.clear();
                   navigate("/");
+                  requestsStore.clear();
                   window.location.reload();
                 }}
                 style={{

@@ -8,9 +8,10 @@ import {
 
 const useBusinessesStore = create(
   persist(
-    (set) => ({
+    (set, get) => ({
       businesses: [],
       fetchBusinesses: async () => {
+        if (get().businesses.length > 0) return;
         const response = await getAllBusinesses();
         set({ businesses: response });
       },

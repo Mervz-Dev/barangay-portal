@@ -12,6 +12,7 @@ import { auth } from "./firebase";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import CreateAccount from "./pages/CreateAccount";
+import Services from "./pages/Services";
 
 import Dashboard from "./pages/private/Dashboard";
 import Requests from "./pages/private/Requests";
@@ -96,6 +97,7 @@ function App() {
         )}
 
         <Route path="businesses" element={<Businesses />} />
+        <Route path="services" element={<Services />} />
       </Route>
     )
   );

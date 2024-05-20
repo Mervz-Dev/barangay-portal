@@ -1,13 +1,7 @@
 import {
   collection,
   doc,
-  getDoc,
-  setDoc,
   getDocs,
-  //   limit,
-  //   onSnapshot,
-  query,
-  where,
   updateDoc,
   addDoc,
   deleteDoc,
@@ -15,7 +9,6 @@ import {
 
 import { COLLECTION_NAMES } from "../firebase/collection";
 import { db } from "../firebase";
-import { update } from "firebase/database";
 
 const addNewBusiness = async (data) => {
   try {

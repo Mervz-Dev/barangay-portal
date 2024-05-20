@@ -19,3 +19,12 @@ code {
 .ant-spin-dot-item {
   background-color: "#00264d" !important;
 }
+
+.cardWithRoundedImage .ant-card-cover {
+  overflow: hidden;
+}
+
+.cardWithRoundedImage .ant-card-cover img {
+  border-radius: 15px 15px 0 0;
+  display: block;
+}

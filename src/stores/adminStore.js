@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getAllRequests } from "../services/form-request";
 import { getAllUsers } from "../services/user";
-import { clear } from "@testing-library/user-event/dist/clear";
+import { getAllBusinesses } from "../services/businesses";
 
 const checkSixMonthsResidency = (startDateOfResidency) => {
   const startDate = new Date(startDateOfResidency);
@@ -23,6 +23,7 @@ const adminStore = create((set) => ({
   fetchAdminDashboard: async (userId) => {
     const requests = await getAllRequests();
     const users = await getAllUsers();
+    const businesses = await getAllBusinesses();
 
     const pendingRequests = requests.filter(
       (request) => request.status === "pending"
@@ -39,12 +40,17 @@ const adminStore = create((set) => ({
     const nonResidents = users.filter(
       (user) => !checkSixMonthsResidency(user.startDateOfResidency)
     );
+
+    const activeBusinesses = businesses.filter(
+      (business) => business.status === "active"
+    );
     set({
       pendingRequestsCount: pendingRequests.length,
       approvedRequestsCount: approvedRequests.length,
       rejectedRequestsCount: rejectedRequests.length,
       residentsCount: residents.length,
       nonResidentsCount: nonResidents.length,
+      businessesCount: activeBusinesses.length,
     });
   },
   clear: () => {

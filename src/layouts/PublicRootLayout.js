@@ -1,23 +1,14 @@
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
-import {
-  Typography,
-  Layout,
-  Space,
-  Menu,
-  Row,
-  Avatar,
-  Divider,
-  Col,
-} from "antd";
+import { Typography, Layout, Space, Menu, Row, Avatar, Divider } from "antd";
 
 const { Header, Content, Footer } = Layout;
-const { Title, Paragraph } = Typography;
+const { Paragraph } = Typography;
 
 const navigation = [
   { label: "Home", key: "/" },
   { label: "Services", key: "/services" },
-  { label: "Announcements", key: "/announcements" },
-  { label: "Contact Us", key: "/about" },
+  { label: "Find Businesses", key: "/businesses" },
+  { label: "About", key: "/about" },
 ];
 
 export default function RootLayout() {

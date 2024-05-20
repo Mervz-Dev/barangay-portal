@@ -1,5 +1,14 @@
 import { useCallback, useEffect, useState } from "react";
-import { List, Row, Col, Typography, Divider, Tabs, Descriptions } from "antd";
+import {
+  List,
+  Row,
+  Col,
+  Typography,
+  Divider,
+  Tabs,
+  Descriptions,
+  Spin,
+} from "antd";
 import { ShopOutlined } from "@ant-design/icons"; // Import the ShopOutlined icon
 import { GoogleMap, useJsApiLoader } from "@react-google-maps/api";
 import { useBusinessesStore } from "../stores/businessesStore";
@@ -15,6 +24,7 @@ export default function Businesses() {
   const [selectedBusiness, setSelectedBusiness] = useState(null);
   const { businesses, fetchBusinesses } = useBusinessesStore();
   const [currentLocation, setCurrenLocation] = useState(defaultCoordinates);
+  const [isInitLoading, setIsInitLoading] = useState(true);
 
   const [tabKey, setTabKey] = useState("directions");
 
@@ -27,6 +37,17 @@ export default function Businesses() {
   const [marker, setMarker] = useState(null);
   const [directionsService, setDirectionService] = useState(null);
   const [directionsRenderer, setDirectionsRenderer] = useState(null);
+
+  const initialFetch = useCallback(async () => {
+    try {
+      setIsInitLoading(true);
+      await fetchBusinesses();
+    } catch (error) {
+      console.error("Error fetching businesses", error);
+    } finally {
+      setIsInitLoading(false);
+    }
+  }, [fetchBusinesses]);
 
   const onLoadMap = useCallback(function callback(map) {
     const marker = new window.google.maps.Marker({
@@ -55,6 +76,8 @@ export default function Businesses() {
   const handleBusinessClick = (business) => {
     if (!directionsService && !marker && !directionsRenderer) return;
 
+    console.log("again");
+
     marker.setPosition(business.coordinates);
     directionsService.route(
       {
@@ -77,11 +100,10 @@ export default function Businesses() {
   useEffect(() => {
     if (businesses.length > 0) {
       setSelectedBusiness(businesses[0]);
-      handleBusinessClick(businesses[0]);
+      handleBusinessClick(selectedBusiness);
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [businesses]);
+  }, [businesses, directionsService]);
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -100,8 +122,7 @@ export default function Businesses() {
     } else {
       console.error("Geolocation is not supported by this browser.");
     }
-
-    fetchBusinesses();
+    initialFetch();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -113,6 +134,21 @@ export default function Businesses() {
       }, 100);
     }
   };
+
+  if (isInitLoading && businesses.length === 0) {
+    return (
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          height: "100vh",
+        }}
+      >
+        <Spin size="large" tip={"Loading Businesses"} />
+      </div>
+    );
+  }
 
   return (
     <div style={{ padding: 10 }}>
