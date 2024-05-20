@@ -76,8 +76,6 @@ export default function Businesses() {
   const handleBusinessClick = (business) => {
     if (!directionsService && !marker && !directionsRenderer) return;
 
-    console.log("again");
-
     marker.setPosition(business.coordinates);
     directionsService.route(
       {
