@@ -46,7 +46,7 @@ function Home() {
           {contextHolder}
           <Col style={{ padding: 10, justifyContent: "flex-start" }}>
             <Title level={4}>
-              Welcome to Amoingon's Barangay Hub - Your One-Stop Destination for
+              Welcome to Barangay Amoingon's Local Portal - Your One-Stop Destination for
               Community Services!
             </Title>
             <Paragraph style={{ fontSize: 16 }}>

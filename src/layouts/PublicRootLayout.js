@@ -35,7 +35,7 @@ export default function RootLayout() {
           <Space size={10}>
             <Avatar alt="none" size={65} src={require("../assets/logo.png")} />
             <Typography.Text style={{ fontSize: 20, color: "white" }}>
-              A-Barangay Hub
+            Barangay Amoingon's Local Portal and Promotional Website
             </Typography.Text>
           </Space>
         </Row>
@@ -58,7 +58,7 @@ export default function RootLayout() {
 
       <Footer style={{ backgroundColor: "white" }}>
         <Paragraph style={{ textAlign: "center" }}>
-          © 2024 BOAC LGU’S LOCAL PORTAL | Barangay Amoingon hub | St. Brgy.
+          © 2024 NEXUS POINT COMPANY | Barangay Amoingon's Local Portal and Promotional Website | Brgy.
           Amoingon, Boac, Marinduque
         </Paragraph>
       </Footer>
