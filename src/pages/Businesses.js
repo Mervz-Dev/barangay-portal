@@ -5,8 +5,8 @@ import {
   Col,
   Typography,
   Divider,
-  Tabs,
   Descriptions,
+  Button,
   Spin,
 } from "antd";
 import { ShopOutlined } from "@ant-design/icons"; // Import the ShopOutlined icon
@@ -168,6 +168,7 @@ export default function Businesses() {
               <Row
                 style={{
                   display: "flex",
+                  height: 70,
                   width: "100%",
                   justifyContent: "space-between",
                   alignItems: "center",
@@ -177,34 +178,35 @@ export default function Businesses() {
                 <Title level={3} style={{ margin: 0 }}>
                   {selectedBusiness.businessName}
                 </Title>
-                <Tabs
-                  activeKey={tabKey}
-                  onChange={handleTabChange}
-                  defaultActiveKey="directions"
-                  style={{ marginTop: 10, flexGrow: 1, alignItems: "flex-end" }}
+                <div
+                  style={{
+                    marginTop: 10,
+                    display: "flex",
+                    justifyContent: "space-between",
+                  }}
                 >
-                  <Tabs.TabPane
-                    tab="Directions"
-                    key="directions"
-                  ></Tabs.TabPane>
-                  <Tabs.TabPane
-                    tab="Full Details"
-                    key="full-details"
-                  ></Tabs.TabPane>
-                </Tabs>
+                  <Button
+                    type={tabKey === "directions" ? "primary" : "default"}
+                    onClick={() => handleTabChange("directions")}
+                  >
+                    Directions
+                  </Button>
+                  <Button
+                    type={tabKey === "full-details" ? "primary" : "default"}
+                    onClick={() => handleTabChange("full-details")}
+                  >
+                    Full Details
+                  </Button>
+                </div>
               </Row>
 
               <>
-                {isLoaded && (
+                {isLoaded && tabKey === "directions" && (
                   <GoogleMap
                     id="map-info"
                     onLoad={onLoadMap}
                     onUnmount={onUnmount}
-                    mapContainerStyle={
-                      tabKey === "directions"
-                        ? { width: "100%", height: "55vh" }
-                        : { width: 0, height: 0 }
-                    }
+                    mapContainerStyle={{ width: "100%", height: "55vh" }}
                     center={selectedBusiness.coordinates}
                     zoom={13}
                   ></GoogleMap>
