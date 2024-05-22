@@ -107,7 +107,6 @@ export default function Businesses() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          // console.log(position);
           setCurrenLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
@@ -179,9 +178,10 @@ export default function Businesses() {
                   {selectedBusiness.businessName}
                 </Title>
                 <Tabs
+                  activeKey={tabKey}
                   onChange={handleTabChange}
                   defaultActiveKey="directions"
-                  style={{ marginTop: 10 }}
+                  style={{ marginTop: 10, flexGrow: 1, alignItems: "flex-end" }}
                 >
                   <Tabs.TabPane
                     tab="Directions"
@@ -217,15 +217,35 @@ export default function Businesses() {
                     <Descriptions.Item label="Business Name">
                       {selectedBusiness.businessName}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Business Description">
+                      {selectedBusiness.businessDescription || "N/A"}
+                    </Descriptions.Item>
                     <Descriptions.Item label="Business Owner">
                       {selectedBusiness.businessOwner}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="Location">
-                      {selectedBusiness.location}
                     </Descriptions.Item>
                     <Descriptions.Item label="Owner Address">
                       {selectedBusiness.ownerAddress}
                     </Descriptions.Item>
+                    <Descriptions.Item label="Location">
+                      {selectedBusiness.location || "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Contact Number">
+                      {selectedBusiness.contactNumber || "N/A"}
+                    </Descriptions.Item>
+                    <Descriptions.Item label="Email">
+                      {selectedBusiness.email || "N/A"}
+                    </Descriptions.Item>
+                    {selectedBusiness.link && (
+                      <Descriptions.Item label="Link">
+                        <a
+                          href={selectedBusiness.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {selectedBusiness.link}
+                        </a>
+                      </Descriptions.Item>
+                    )}
                   </Descriptions>
                 </div>
               )}

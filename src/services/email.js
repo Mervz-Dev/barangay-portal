@@ -1,6 +1,6 @@
 import emailjs from "@emailjs/browser";
 
-const sendEmailStatus = async ({ email, name, status, formName }) => {
+const sendEmailStatus = async ({ email, name, status, formName, reason }) => {
   const templateId =
     status === "approved" ? "template_zth1pw5" : "template_u7lqjde";
 
@@ -9,6 +9,7 @@ const sendEmailStatus = async ({ email, name, status, formName }) => {
       to_email: email,
       user_name: name,
       type_form: formName,
+      rejection_reason: reason || "",
     };
     const response = await emailjs.send(
       "service_ijhjmi8",

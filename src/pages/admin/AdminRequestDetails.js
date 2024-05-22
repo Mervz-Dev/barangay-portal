@@ -9,6 +9,8 @@ import {
   Tag,
   Typography,
   Modal,
+  Form,
+  Input,
 } from "antd";
 import { CheckCircleOutlined } from "@ant-design/icons";
 import { useParams } from "react-router-dom";
@@ -24,10 +26,12 @@ const { Text, Paragraph } = Typography;
 function AdminRequestDetails() {
   const { id } = useParams();
   const [isSuccessModalVisible, setIsSuccessModalVisible] = useState(false);
+  const [isRejectModalVisible, setIsRejectModalVisible] = useState(false);
   const { setPageLoading } = usePageLoaderStore();
   const request = useRequestsStore((state) =>
     state.requests.find((r) => r.id === id)
   );
+  const [form] = Form.useForm();
   const { updateRequest } = useRequestsStore();
   const [user, setUser] = useState({
     fullname: "",
@@ -59,6 +63,14 @@ function AdminRequestDetails() {
   const closeSuccessModal = () => {
     setIsSuccessModalVisible(false);
     navigate(-1);
+  };
+
+  const showRejectModal = () => {
+    setIsRejectModalVisible(true);
+  };
+
+  const closeRejectModal = () => {
+    setIsRejectModalVisible(false);
   };
 
   function getFormName(type) {
@@ -100,9 +112,10 @@ function AdminRequestDetails() {
     }
   };
 
-  const handleReject = async () => {
+  const handleReject = async (values) => {
     try {
       setPageLoading(true);
+      setIsRejectModalVisible(false);
       const copyRequest = { ...request };
       copyRequest.status = "rejected";
       await sendEmailStatus({
@@ -110,6 +123,7 @@ function AdminRequestDetails() {
         name: user.fullname,
         status: "rejected",
         formName: getFormName(request.type),
+        reason: values.reason,
       });
 
       await updateRequest(copyRequest);
@@ -152,6 +166,21 @@ function AdminRequestDetails() {
             Okay
           </Button>
         </div>
+      </Modal>
+
+      <Modal title="Reject Request" open={isRejectModalVisible} footer={null}>
+        <Form form={form} onFinish={handleReject}>
+          <Form.Item label="Reason" name="reason">
+            <Input.TextArea />
+          </Form.Item>
+          <Form.Item>
+            <div style={{ textAlign: "right" }}>
+              <Button type="primary" htmlType="submit">
+                Submit Reject
+              </Button>
+            </div>
+          </Form.Item>
+        </Form>
       </Modal>
       <Breadcrumb style={{ margin: "12px 0" }} onClick={handleBreadcrumbClick}>
         <Breadcrumb.Item>Request</Breadcrumb.Item>
@@ -229,7 +258,7 @@ function AdminRequestDetails() {
             <Col>
               <Space>
                 <Button
-                  onClick={handleReject}
+                  onClick={showRejectModal}
                   danger
                   style={{
                     height: 60,

@@ -87,16 +87,6 @@ const Businesses = () => {
       sorter: (a, b) => a.businessOwner.localeCompare(b.businessOwner),
     },
     {
-      title: "Owner Address",
-      dataIndex: "ownerAddress",
-      key: "ownerAddress",
-    },
-    {
-      title: "Location",
-      dataIndex: "location",
-      key: "location",
-    },
-    {
       title: "Actions",
       key: "action",
       render: (text, record) => (
@@ -163,6 +153,10 @@ const Businesses = () => {
         location: values.location,
         ownerAddress: values.ownerAddress,
         coordinates: values.coordinates,
+        businessDescription: values.businessDescription,
+        contactNumber: values.contactNumber,
+        email: values.email,
+        link: values.link,
       };
       await addNewBusiness(businessData);
     } catch (error) {
@@ -260,6 +254,18 @@ const Businesses = () => {
           >
             <Input placeholder="Business Name" size="large" />
           </Form.Item>
+          <Form.Item
+            name="businessDescription"
+            rules={[
+              {
+                required: true,
+                message: "This field is required!",
+              },
+            ]}
+            style={{ marginTop: 10 }}
+          >
+            <Input placeholder="Business Description" size="large" />
+          </Form.Item>
 
           <Form.Item
             name="businessOwner"
@@ -285,6 +291,59 @@ const Businesses = () => {
             style={{ marginTop: 10 }}
           >
             <Input placeholder="Address of Owner" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            name="contactNumber"
+            rules={[
+              {
+                required: true,
+                message: "This field is required!",
+              },
+            ]}
+            style={{ marginTop: 10 }}
+          >
+            <Input placeholder="Contact Number" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            name="email"
+            rules={[
+              {
+                required: true,
+                message: "This field is required!",
+              },
+              {
+                type: "email",
+                message: "The input is not a valid email!",
+              },
+            ]}
+            style={{ marginTop: 10 }}
+          >
+            <Input placeholder="Email" size="large" />
+          </Form.Item>
+
+          <Form.Item
+            name="link"
+            rules={[
+              {
+                required: false,
+                pattern: new RegExp(
+                  "^(https?:\\/\\/)?" + // protocol
+                    "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" + // domain name and extension
+                    "((\\d{1,3}\\.){3}\\d{1,3}))" + // OR ip (v4) address
+                    "(\\:\\d+)?" + // port
+                    "(\\/[-a-z\\d%_.~+]*)*" + // path
+                    "(\\?[;&a-z\\d%_.~+=-]*)?" + // query string
+                    "(\\#[-a-z\\d_]*)?$",
+                  "i"
+                ),
+                message: "The input is not a valid URL!",
+              },
+            ]}
+            style={{ marginTop: 10 }}
+          >
+            <Input placeholder="Link (Optional)" size="large" />
           </Form.Item>
 
           <Form.Item
@@ -420,7 +479,7 @@ const Businesses = () => {
             <Descriptions
               title={selectedBusiness.businessName}
               layout="horizontal"
-              column={2}
+              column={1}
             >
               <Descriptions.Item label="Owner">
                 {selectedBusiness.businessOwner}
@@ -430,6 +489,18 @@ const Businesses = () => {
               </Descriptions.Item>
               <Descriptions.Item label="Location">
                 {selectedBusiness.location}
+              </Descriptions.Item>
+              <Descriptions.Item label="Business Description">
+                {selectedBusiness.businessDescription || "None"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Contact Number">
+                {selectedBusiness.contactNumber || "None"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Email">
+                {selectedBusiness.email || "None"}
+              </Descriptions.Item>
+              <Descriptions.Item label="Link">
+                {selectedBusiness.link || "None"}
               </Descriptions.Item>
             </Descriptions>
             {isLoaded && (
