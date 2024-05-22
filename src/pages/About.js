@@ -7,22 +7,22 @@ const { Meta } = Card;
 
 const developers = [
   {
-    name: "Christian Narvaez",
+    name: "Mark Daniel Ponce",
     role: "Student",
     imageUrl: require("../assets/developers/dev-1.jpg"),
   },
   {
-    name: "Mark Daniel Ponce",
+    name: "Brylle Ildefon Saez",
     role: "Student",
     imageUrl: require("../assets/developers/dev-2.jpg"),
   },
   {
-    name: "Brylle",
+    name: "Francis Dimailig",
     role: "Student",
     imageUrl: require("../assets/developers/dev-3.jpg"),
   },
   {
-    name: "Francis",
+    name: "Christian Narvaez",
     role: "Student",
     imageUrl: require("../assets/developers/dev-4.jpg"),
   },
@@ -35,7 +35,7 @@ export default function About() {
       <Typography>
         <Title style={{ margin: 0, marginBottom: 10 }}>About</Title>
         <Paragraph>
-          The Amoingon Barangay Hub was created to serve as a digital platform
+          The Barangay Amoingon's Local Portal and Promotional Website was created to serve as a digital platform
           for our vibrant and thriving community. Our goal is to provide
           residents with easy access to important services, information, and
           amenities. This platform is a testament to our commitment to fostering
@@ -44,12 +44,12 @@ export default function About() {
         <Paragraph>
           For any inquiries or further information, feel free to contact us at:
           <br />
-          <Text strong>Email:</Text> info@amoingonbarangayhub.com
+          <Text strong>Email:</Text> nexuspoint.amoingonbarangayhub@gmail.com
           <br />
-          <Text strong>Phone:</Text> +1234567890
+          <Text strong>Phone:</Text> +63966-820-6104
         </Paragraph>
         <Paragraph>
-          <Text strong>Location:</Text> Amoingon, City Name, Country
+          <Text strong>Location:</Text> Amoingon, Boac, Marinduque, Philippines
         </Paragraph>
 
         <Divider />
@@ -58,8 +58,7 @@ export default function About() {
           About the Developers
         </Title>
         <Paragraph style={{ margin: "30px 0px" }}>
-          This website was developed by a dedicated and passionate team of
-          software engineers with a love for community service. With a strong
+          This website was developed by NEXUS POINT Company with a love for community service. With a strong
           background in web development and a keen eye for design, they have
           created a user-friendly platform that serves the needs of the Amoingon
           Barangay community.

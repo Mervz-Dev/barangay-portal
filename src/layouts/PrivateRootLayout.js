@@ -62,7 +62,7 @@ export default function PrivateRootLayout() {
                 src={require("../assets/logo.png")}
               />
               <Typography.Text style={{ fontSize: 20, color: "white" }}>
-                A-Barangay Hub
+              Barangay Amoingon's Local Portal and Promotional Website
               </Typography.Text>
             </Space>
           </Row>
