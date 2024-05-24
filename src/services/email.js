@@ -2,7 +2,7 @@ import emailjs from "@emailjs/browser";
 
 const sendEmailStatus = async ({ email, name, status, formName, reason }) => {
   const templateId =
-    status === "approved" ? "template_zth1pw5" : "template_u7lqjde";
+    status === "approved" ? "template_xnwj1b9" : "template_c3x4pok";
 
   try {
     const templateParams = {
@@ -12,11 +12,11 @@ const sendEmailStatus = async ({ email, name, status, formName, reason }) => {
       rejection_reason: reason || "",
     };
     const response = await emailjs.send(
-      "service_ijhjmi8",
+      "service_pvixkuo",
       templateId,
       templateParams,
       {
-        publicKey: "x1jY58aKE7_ioMb9G",
+        publicKey: "5XnCSb5NlVoqin00i",
       }
     );
     console.log("Email successfully sent!", response.status, response.text);
