@@ -74,8 +74,9 @@ export default function Businesses() {
   }, []);
 
   const handleBusinessClick = (business) => {
+    setSelectedBusiness(business);
     if (!directionsService && !marker && !directionsRenderer) return;
-
+    console.log(currentLocation, business.coordinates, "currentLocation");
     marker.setPosition(business.coordinates);
     directionsService.route(
       {
@@ -91,8 +92,6 @@ export default function Businesses() {
         }
       }
     );
-
-    setSelectedBusiness(business);
   };
 
   useEffect(() => {
@@ -107,6 +106,7 @@ export default function Businesses() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
+          console.log(position, "position");
           setCurrenLocation({
             lat: position.coords.latitude,
             lng: position.coords.longitude,
