@@ -74,6 +74,7 @@ export default function Businesses() {
   }, []);
 
   const handleBusinessClick = (business) => {
+    if (!business) return;
     setSelectedBusiness(business);
     if (!directionsService && !marker && !directionsRenderer) return;
     console.log(currentLocation, business.coordinates, "currentLocation");
