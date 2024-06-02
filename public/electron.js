@@ -1,7 +1,7 @@
 // electron.js
 const { app, BrowserWindow, screen } = require("electron");
 const path = require("path");
-const isDev = require("electron-is-dev");
+// const isDev = require("electron-is-dev");
 
 let mainWindow;
 
@@ -16,9 +16,9 @@ function createWindow() {
     },
   });
 
-  const startURL = isDev
-    ? "http://localhost:3000"
-    : `file://${path.join(__dirname, "../build/index.html")}`;
+  const startURL = `file://${path.join(__dirname, "../build/index.html")}`;
+  // ? "http://localhost:3000"
+  // : `file://${path.join(__dirname, "../build/index.html")}`;
 
   mainWindow.loadURL(startURL);
 

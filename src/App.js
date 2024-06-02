@@ -1,10 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Route,
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromElements,
-} from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import { ConfigProvider, Spin } from "antd";
 import { auth } from "./firebase";
 
@@ -40,7 +35,6 @@ function App() {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       try {
-        console.log(user, "user from state change");
         if (!user) {
           await onLogout();
           return;
@@ -62,51 +56,10 @@ function App() {
     return <Spin />;
   }
 
-  const router = createBrowserRouter(
-    createRoutesFromElements(
-      <Route
-        path="/"
-        element={isAuthenticated ? <PrivateRootLayout /> : <PublicRootLayout />}
-      >
-        {isAuthenticated ? (
-          <>
-            {role === "admin" ? (
-              <>
-                <Route index element={<AdminDashboard />} />
-                <Route path="requests">
-                  <Route index element={<AdminRequests />} />
-                  <Route path=":id" element={<AdminRequestDetails />} />
-                </Route>
-                <Route path="businesses" element={<AdminBusinesses />} />
-              </>
-            ) : (
-              <>
-                <Route index element={<Dashboard />} />
-                <Route path="requests" element={<Requests />} />
-
-                <Route path="faq" element={<Faq />} />
-              </>
-            )}
-          </>
-        ) : (
-          <>
-            <Route index element={<Home />} />
-            <Route path="about" element={<About />} />
-            <Route path="create-account" element={<CreateAccount />} />
-          </>
-        )}
-
-        <Route path="businesses" element={<Businesses />} />
-        <Route path="services" element={<Services />} />
-      </Route>
-    )
-  );
-
   return (
     <ConfigProvider
       theme={{
         token: {
-          // Seed Token
           borderRadius: 2,
           fontFamily: "Poppins",
           colorPrimary: "#003b7f",
@@ -126,7 +79,46 @@ function App() {
       }}
     >
       <Spin spinning={isPageLoading} size="large" tip="Loading...">
-        <RouterProvider router={router} />
+        <Router>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? <PrivateRootLayout /> : <PublicRootLayout />
+              }
+            >
+              {isAuthenticated ? (
+                <>
+                  {role === "admin" ? (
+                    <>
+                      <Route index element={<AdminDashboard />} />
+                      <Route path="requests" element={<AdminRequests />} />
+                      <Route
+                        path="requests/:id"
+                        element={<AdminRequestDetails />}
+                      />
+                      <Route path="businesses" element={<AdminBusinesses />} />
+                    </>
+                  ) : (
+                    <>
+                      <Route index element={<Dashboard />} />
+                      <Route path="requests" element={<Requests />} />
+                      <Route path="faq" element={<Faq />} />
+                    </>
+                  )}
+                </>
+              ) : (
+                <>
+                  <Route index element={<Home />} />
+                  <Route path="about" element={<About />} />
+                  <Route path="create-account" element={<CreateAccount />} />
+                </>
+              )}
+              <Route path="businesses" element={<Businesses />} />
+              <Route path="services" element={<Services />} />
+            </Route>
+          </Routes>
+        </Router>
       </Spin>
     </ConfigProvider>
   );
